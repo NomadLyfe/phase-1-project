@@ -193,3 +193,9 @@ td {
     top: 16.5px;
     padding: 1.5px 8px;
 }
+#description {
+    margin-right: 35%;
+}
+#stockHeadInfo {
+    margin-left: 20px;
+}
