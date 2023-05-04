@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    let currentStock = 'bitcoin';
+    //setInterval(fetchStocks(currentStock), 60*5*1000);
+    //setInterval(fetchStockAction(currentStock), 60*5*1000);
+    //fetchDescription(currentStock)
     let date = new Date();
     let fullDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
     console.log(fullDate);
@@ -80,6 +84,19 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         document.getElementsByClassName('lineSegment')[0].remove();
     }
+    function fetchDescription(stockName) {
+        fetch(`https://api.coingecko.com/api/v3/coins/${stockName}`)
+            .then(resp => resp.json())
+            .then(data => displayDecription(data.description.en))
+    }
+    function displayDecription(stockDesc) {
+        const sentences = stockDesc.split('\n');
+        const p = document.querySelector('#description');
+        p.innerHTML = '';
+        sentences.forEach((el) => {
+            p.innerHTML += el + '<br>';
+        })
+    }
     const form = document.querySelector('#searchForm')
     form.addEventListener('mouseover', () => {
         form.style = 'box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12)';
@@ -97,4 +114,31 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchDescription(searchedStock);
         form.reset();
     })
+    const x = document.querySelector('#xAxis');
+    let currHour = date.getHours();
+    function hours() {
+        let hour = currHour;
+        for (let i = 0; i < 25; i++) {
+            const span = document.createElement('span');
+            if (hour === 24) {
+                hour = 0;
+                span.textContent = hour;
+                span.style = 'margin-right: 32px;';
+                x.append(span);
+                hour += 1;
+            } else {
+                span.textContent = hour;
+                if (hour <9) {
+                    span.style = 'margin-right: 32px;';
+                } else if (hour > 9 && hour < 23) {
+                    span.style = 'margin-right: 24px;';
+                } else if (hour === 23 || hour === 9) {
+                    span.style = 'margin-right: 28px;';
+                }
+                x.append(span);
+                hour += 1;
+            }
+        }
+    }
+    hours();
 });

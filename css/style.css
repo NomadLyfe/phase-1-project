@@ -157,4 +157,8 @@ td {
     width: calc(var(--hypotenuse) * 1px);
     transform: rotate(calc(var(--angle) * 1rad));
     transform-origin: left bottom;
-  }
+}
+#xAxis {
+    margin-top: 10px;
+    margin-left: -5px;
+}
