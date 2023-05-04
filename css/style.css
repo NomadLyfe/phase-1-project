@@ -2,6 +2,7 @@ body {
     top: 0px;
     position: static;
     margin: 0;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 header {
     top: 0px;
@@ -21,14 +22,15 @@ nav{
 }
 aside {
     flex: 0 0 calc(25% - 24px);
-    width: 20%;
+    max-width: 400px;
+    min-width: 350px;
     height: calc(100vh - 64px - 48px);
-    padding: 36px 15% 24px 24px;
+    padding: 36px 13% 24px 10px;
     position: fixed;
     top: 65px;
     right: 0;
-    background-color: white;
     z-index: 2;
+    overflow-y: scroll;
 }
 #listCreator {
     height: 52px;
@@ -174,7 +176,7 @@ td {
     width: 120px;
     bottom: 100%;
     left: 50%;
-    margin-left: -60px;
+    margin-left: -10px;
 }
 .btn {
     cursor: pointer;
