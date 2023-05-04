@@ -196,4 +196,28 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         }
     })
+    const addBtn = document.querySelector('#addToListBtn');
+    addBtn.addEventListener('click', (e) => {
+        const listName = e.target.parentNode.firstChild.nextSibling.nextSibling.nextSibling.value;
+        const stockName = e.target.parentNode.firstChild.nextSibling.textContent;
+        const listNode = document.querySelector(`#${listName}`);
+        const div = document.createElement('div');
+        const h4 = document.createElement('h4');
+        const btn1 = document.createElement('button');
+        div.id = stockName;
+        btn1.className = 'btn2';
+        btn1.textContent = '-';
+        btn1.addEventListener('click', (e) => {e.target.parentNode.remove()})
+        h4.textContent = stockName;
+        h4.style = 'cursor: pointer;';
+        div.appendChild(h4);
+        div.appendChild(btn1);
+        listNode.appendChild(div);
+        document.querySelector(`#${stockName}`).querySelector('h4').addEventListener('click', (e) => {
+            currentStock = e.target.textContent.toLowerCase();
+            fetchStocks(currentStock);
+            fetchStockAction(currentStock);
+            fetchDescription(currentStock);
+        })
+    })
 });
