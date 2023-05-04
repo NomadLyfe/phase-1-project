@@ -141,4 +141,59 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     hours();
+    const newListBtn = document.querySelector('#newListBtn');
+    newListBtn.addEventListener('click', (e) => {
+        const asideHead = document.querySelector('.asideHead');
+        const asideBody = document.querySelector('.asideBody');
+        const check = document.querySelector('#newListForm');
+        if (!Boolean(check)) {
+            const div = document.createElement('div');
+            div.id = 'newListForm';
+            div.innerHTML = '<form><input type="text" placeholder="List Name"/><br><button id="cancelBtn">Cancel</button><button id="createBtn">Create List</button></form>';
+            asideHead.appendChild(div);
+            document.querySelector('#cancelBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('#newListForm').remove();
+            })
+            document.querySelector('#createBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                const container = document.createElement('div');
+                const div = document.createElement('div');
+                container.id = e.target.parentNode.firstChild.value;
+                container.className = 'container';
+                div.className = 'newList';
+                const h4 = document.createElement('h4');
+                h4.textContent = e.target.parentNode.firstChild.value;
+                const btn1 = document.createElement('button');
+                btn1.className = 'btn1';
+                btn1.textContent = '-';
+                const btn2 = document.createElement('button');
+                btn2.className = 'btn2';
+                btn2.textContent = '\u2228';
+                const option = document.createElement('option');
+                option.value = e.target.parentNode.firstChild.value;
+                option.textContent = e.target.parentNode.firstChild.value;
+                document.querySelector('#myDropdown').appendChild(option);
+                container.appendChild(div);
+                div.appendChild(h4);
+                div.appendChild(btn1);
+                div.appendChild(btn2);
+                asideBody.append(container);
+                document.querySelector('#newListForm').remove();
+                btn2.addEventListener('click', () => {
+                    if (btn2.textContent === '\u2228') {
+                        btn2.textContent = '\u2227';
+                    } else {
+                        btn2.textContent = '\u2228';
+                    }
+                })
+                btn1.addEventListener('click', (e) => {
+                    const textBox = `Are you sure you want to delete the following list? \n \n "${e.target.parentNode.firstChild.textContent}"`;
+                    if (confirm(textBox) === true) {
+                        e.target.parentNode.parentNode.remove();
+                    }                    
+                })
+            })
+        }
+    })
 });
