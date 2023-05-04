@@ -182,3 +182,14 @@ td {
 .container {
     height: auto;
 }
+#listCreator div .btn2 {
+    position: absolute;
+    right: 20px;
+    top: 16.5px;
+}
+#listCreator div .btn1 {
+    position: absolute;
+    right: 50px;
+    top: 16.5px;
+    padding: 1.5px 8px;
+}
