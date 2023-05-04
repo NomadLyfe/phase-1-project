@@ -30,6 +30,10 @@ aside {
     background-color: white;
     z-index: 2;
 }
+#listCreator {
+    height: 52px;
+    width: 100%;
+}
 #listCreator div {
     height: 100%;
     width: 100%;
@@ -119,3 +123,38 @@ td {
     width: 180px;
     height: 40px;
 }
+#chart {
+    border-bottom: 1px solid rgb(227, 233, 237);
+    border-left: 1px solid rgb(227, 233, 237);
+    height: 400px;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 1000px;
+    z-index: 1;
+}
+.lineChart {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+}
+.dataPoint {
+    background-color: white;
+    border-radius: 50%;
+    height: 12px;
+    position: absolute;
+    width: 12px;
+    z-index: 1;
+    bottom: calc(var(--y) - 8px);
+    left: calc(var(--x) - 8px);
+}
+.lineSegment {
+    bottom: var(--y);
+    height: 3px;
+    left: var(--x);
+    position: absolute;
+    width: calc(var(--hypotenuse) * 1px);
+    transform: rotate(calc(var(--angle) * 1rad));
+    transform-origin: left bottom;
+  }
