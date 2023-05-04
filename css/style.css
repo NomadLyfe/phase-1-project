@@ -1,0 +1,21 @@
+body {
+    top: 0px;
+    position: static;
+    margin: 0;
+}
+header {
+    top: 0px;
+    position: sticky;
+    border-bottom: solid 1px rgb(227, 233, 237);
+    z-index: 2;
+}
+nav{
+    height: 64px;
+    top: 0px;
+    width: 100%;
+    z-index: 3;
+    background-color: white;
+    display: flex;
+    align-items: center;
+
+}
