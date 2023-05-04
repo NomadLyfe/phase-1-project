@@ -80,4 +80,21 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         document.getElementsByClassName('lineSegment')[0].remove();
     }
+    const form = document.querySelector('#searchForm')
+    form.addEventListener('mouseover', () => {
+        form.style = 'box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12)';
+    })
+    form.addEventListener('mouseout', () => {
+        form.style = 'box-shadow: none';
+    })
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        console.log(form.querySelector('input').value.toLowerCase())
+        const searchedStock = form.querySelector('input').value.toLowerCase();
+        currentStock = searchedStock;
+        fetchStocks(searchedStock);
+        fetchStockAction(searchedStock);
+        fetchDescription(searchedStock);
+        form.reset();
+    })
 });
