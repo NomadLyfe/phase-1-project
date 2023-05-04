@@ -19,3 +19,33 @@ nav{
     align-items: center;
 
 }
+aside {
+    flex: 0 0 calc(25% - 24px);
+    width: 20%;
+    height: calc(100vh - 64px - 48px);
+    padding: 36px 15% 24px 24px;
+    position: fixed;
+    top: 65px;
+    right: 0;
+    background-color: white;
+    z-index: 2;
+}
+#listCreator div {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    border: solid 1px rgb(227, 233, 237);
+    margin-top: -1px;
+    margin-left: -1px;
+}
+#listCreator div h4 {
+    left: 20px;
+    position: absolute;
+    margin: 0px;
+    top: 18px;
+}
+#listCreator div .btn {
+    position: absolute;
+    right: 20px;
+    top: 16.5px;
+}
