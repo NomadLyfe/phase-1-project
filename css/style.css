@@ -176,3 +176,9 @@ td {
     left: 50%;
     margin-left: -60px;
 }
+.btn {
+    cursor: pointer;
+}
+.container {
+    height: auto;
+}
