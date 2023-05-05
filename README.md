@@ -12,6 +12,10 @@ A visitor can also organize the coins that you want to keep track of in an edita
 
 The page also makes a fetch request to Coingecko every 5 minutes in order to update the 24 hour price history graph with any live updates.
 
+## Sample GIF of Application
+
+![Cryptomaniac Demo](./gif/ProjectOneGif.gif)
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
