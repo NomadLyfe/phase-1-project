@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     let currentStock = 'bitcoin';
-    setInterval(fetchStocks(currentStock), 60*5*1000);
-    setInterval(fetchStockAction(currentStock), 60*5*1000);
-    fetchDescription(currentStock)
+    //setInterval(fetchStocks(currentStock), 60*5*1000);
+    //setInterval(fetchStockAction(currentStock), 60*5*1000);
+    //fetchDescription(currentStock)
     let date = new Date();
     let fullDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
     console.log(fullDate);
