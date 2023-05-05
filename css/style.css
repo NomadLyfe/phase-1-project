@@ -204,8 +204,7 @@ td {
 footer {
     position: relative;
     width: 100%;
-    min-height: 200px;
-    padding: 20px 50px;
+    min-height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -231,7 +230,7 @@ footer {
     z-index: 999;
     opacity: 0.5;
     bottom: 10px;
-    animation: animate 4s linear infinite;
+    animation: animate 4s linear infinite !important;
 }
 .wave#wave3 {
     z-index: 1000;
@@ -248,6 +247,14 @@ footer {
 @keyframes animateWaves {
     0% {
       background-position-x: 1000px;
+    }
+    100% {
+      background-positon-x: 0px;
+    }
+}
+@keyframes animate {
+    0% {
+      background-position-x: -1000px;
     }
     100% {
       background-positon-x: 0px;
