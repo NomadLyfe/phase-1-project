@@ -22,4 +22,8 @@ Please make sure to update tests as appropriate.
 
 I plan on eventually adding the capability to change the interval tracking of the graphical price history of the chosen coin.
 
-In addition, I plan on adding the capability to take a customizable date range to display on the graph. 
+In addition, I plan on adding the capability to take a customizable date range to display on the graph.
+
+## License
+
+Flatiron School

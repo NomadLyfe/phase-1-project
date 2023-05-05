@@ -41,7 +41,7 @@ aside {
     position: relative;
     border: solid 1px rgb(227, 233, 237);
     margin-top: -1px;
-    margin-left: -1px;
+    margin-left: -0.5px;
     background-color: #fff;
 }
 #listCreator div h4 {
