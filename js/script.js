@@ -234,5 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchStockAction(currentStock);
             fetchDescription(currentStock);
         })
+        document.querySelector('#myDropdown').value = 'default';
     })
 });
