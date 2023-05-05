@@ -123,17 +123,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (hour === 24) {
                 hour = 0;
                 span.textContent = hour;
-                span.style = 'margin-right: 32px;';
+                span.style = 'margin-right: 30px;';
                 x.append(span);
                 hour += 1;
             } else {
                 span.textContent = hour;
                 if (hour <9) {
-                    span.style = 'margin-right: 32px;';
-                } else if (hour > 9 && hour < 23) {
-                    span.style = 'margin-right: 24px;';
+                    span.style = 'margin-right: 30px;';
+                } else if (hour > 9 && hour < 20) {
+                    span.style = 'margin-right: 20px;';
+                } else if (hour > 19 && hour < 23) {
+                    span.style = 'margin-right: 17px;';
                 } else if (hour === 23 || hour === 9) {
-                    span.style = 'margin-right: 28px;';
+                    span.style = 'margin-right: 24.5px;';
                 }
                 x.append(span);
                 hour += 1;

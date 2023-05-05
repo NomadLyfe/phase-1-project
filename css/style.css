@@ -92,7 +92,7 @@ main {
 #pageLogo {
     height: 50px;
     left: 40px;
-    position: fixed;
+    position: absolute;
 }
 #webName {
     padding-left: 100px;
