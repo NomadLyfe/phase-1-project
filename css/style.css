@@ -35,14 +35,46 @@ aside {
     height: 52px;
     width: 100%;
 }
-#listCreator div {
+#listCreator .asideHead{
     height: 100%;
     width: 100%;
     position: relative;
     border: solid 1px rgb(227, 233, 237);
     margin-top: -1px;
-    margin-left: -0.5px;
+    margin-left: -1px;
     background-color: #fff;
+}
+#listCreator .asideHead div{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    border: solid 1px rgb(227, 233, 237);
+    margin-top: -1px;
+    margin-left: -1px;
+    background-color: #fff;
+}
+#listCreator .asideBody{
+    width: 350px;
+    height: auto;
+    position: relative;
+    margin-top: -1px;
+    margin-left: -1px;
+}
+#listCreator .asideBody .newList{
+    font-size: 12pt;
+}
+#listCreator .asideBody div div{
+    height: 52px;
+    width: 350px;
+    position: relative;
+    border: solid 1px rgb(227, 233, 237);
+    background-color: #fff;
+    margin-top: -1px;
+    font-weight: 100;
+    font-size: 10pt;
+}
+#listCreator div form {
+    margin: 5px 0 auto 20px;
 }
 #listCreator div h4 {
     left: 20px;
@@ -183,6 +215,9 @@ td {
 }
 .container {
     height: auto;
+    border: none;
+    width: 352px;
+    margin-top: -1px;
 }
 #listCreator div .btn2 {
     position: absolute;

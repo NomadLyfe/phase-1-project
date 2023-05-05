@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn1.textContent = '-';
                 const btn2 = document.createElement('button');
                 btn2.className = 'btn2';
-                btn2.textContent = '\u2228';
+                btn2.textContent = '\u2227';
                 const option = document.createElement('option');
                 option.value = e.target.parentNode.firstChild.value;
                 option.textContent = e.target.parentNode.firstChild.value;
@@ -182,11 +182,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 div.appendChild(btn2);
                 asideBody.append(container);
                 document.querySelector('#newListForm').remove();
-                btn2.addEventListener('click', () => {
-                    if (btn2.textContent === '\u2228') {
-                        btn2.textContent = '\u2227';
-                    } else {
+                btn2.addEventListener('click', (e) => {
+                    console.log(e.target.parentNode.parentNode.id)
+                    if (btn2.textContent === '\u2227') {
                         btn2.textContent = '\u2228';
+                        const coins = document.querySelectorAll(`#${e.target.parentNode.parentNode.id} div`)
+                        for (let i = 0; i < coins.length; i++) {
+                            if (coins[i] !== coins[0]) {
+                                coins[i].style = 'visibility: hidden; height: 0px;'
+                            }
+                        }
+                    } else {
+                        btn2.textContent = '\u2227';
+                        const coins = document.querySelectorAll(`#${e.target.parentNode.parentNode.id} div`)
+                        for (let i = 0; i < coins.length; i++) {
+                            if (coins[i] !== coins[0]) {
+                                coins[i].style = 'visibility: visible; height: 52px;'
+                            }
+                        }
                     }
                 })
                 btn1.addEventListener('click', (e) => {
