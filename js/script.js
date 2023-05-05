@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(fetchStockAction(currentStock), 60*5*1000);
     fetchDescription(currentStock)
     let date = new Date();
-    let fullDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
-    console.log(fullDate);
+    let fullDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
     function fetchStocks(stockName) {
         fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${stockName}`)
         .then(resp => resp.json())
@@ -106,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        console.log(form.querySelector('input').value.toLowerCase())
         const searchedStock = form.querySelector('input').value.toLowerCase();
         currentStock = searchedStock;
         fetchStocks(searchedStock);
@@ -183,7 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 asideBody.append(container);
                 document.querySelector('#newListForm').remove();
                 btn2.addEventListener('click', (e) => {
-                    console.log(e.target.parentNode.parentNode.id)
                     if (btn2.textContent === '\u2227') {
                         btn2.textContent = '\u2228';
                         const coins = document.querySelectorAll(`#${e.target.parentNode.parentNode.id} div`)
@@ -205,6 +202,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn1.addEventListener('click', (e) => {
                     const textBox = `Are you sure you want to delete the following list? \n \n "${e.target.parentNode.firstChild.textContent}"`;
                     if (confirm(textBox) === true) {
+                        const options = document.querySelectorAll('option');
+                        for (const option of options) {
+                            if (option.value === e.target.parentNode.querySelector('h4').textContent) {
+                                option.remove();
+                            }
+                        }
                         e.target.parentNode.parentNode.remove();
                     }                    
                 })
