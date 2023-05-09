@@ -1,15 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     let currentStock = 'bitcoin';
     setInterval(fetchStocks(currentStock), 60*5*1000);
     setInterval(fetchStockAction(currentStock), 60*5*1000);
     fetchDescription(currentStock)
     let date = new Date();
     let fullDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
+
     function fetchStocks(stockName) {
         fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${stockName}`)
         .then(resp => resp.json())
         .then(data => displayStockInfo(data));
     }
+
     function displayStockInfo(stock) {
         const h1 = document.querySelector('h1');
         h1.querySelector('span').textContent = stock[0].id[0].toUpperCase() + stock[0].id.slice(1);
@@ -26,11 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
         cmcap.textContent = stock[0].market_cap_change_24h;
         pmcap.textContent = stock[0].market_cap_change_percentage_24h;
     }
+
     function fetchStockAction(stockName) {
         fetch(`https://api.coingecko.com/api/v3/coins/${stockName}/market_chart?vs_currency=usd&days=1&interval=hourly`)
         .then(resp => resp.json())
         .then(data => displayChart(data.prices));
     }
+
     function displayChart(stockAction) {
         const h3 = document.querySelector('h3');
         const change = stockAction[24][1] - stockAction[0][1];
@@ -54,40 +59,46 @@ document.addEventListener('DOMContentLoaded', () => {
         let oldrise = 0;
         const ul = document.querySelector('ul');
         ul.innerHTML = '';
-        stockAction.forEach(price => {
-            const li = document.createElement('li');
-            let newrise = ((price[1] - min)/(max-min))*400;
-            li.style = `--y: ${newrise}px; --x: ${40*i}px;`;
-            const hyp = Math.sqrt(((newrise-oldrise)**2)+(40**2));
-            let ang = 0;
-            if (newrise > oldrise) {
-                ang = Math.asin(40/hyp) + Math.PI/2;
-            } else {
-                ang = Math.asin((oldrise-newrise)/hyp) + Math.PI;
-            }
-            li.innerHTML = `<div class="dataPoint" value="${price[1]}" style="border: 2px solid ${lineColor}; cursor: pointer;";></div>
-            <div class="lineSegment" style="--hypotenuse: ${hyp}; --angle: ${ang}; background-color: ${lineColor};"></div>`;
-            const tooltip = document.createElement('div');
-            tooltip.className = 'tooltiptext';
-            tooltip.textContent = `$${price[1].toFixed(4)}`;
-            ul.append(li);
-            const datapoint = li.querySelector('div');
-            datapoint.addEventListener('mouseover', () => {
-                datapoint.appendChild(tooltip);
-            });
-            datapoint.addEventListener('mouseout', () => {
-                document.querySelector('.tooltiptext').remove();
-            });            
-            oldrise = newrise;
-            i ++;
-        })
+        prices.forEach(price => {
+            oldrise = makeDataPoint(price, ul, max, min, i, oldrise, lineColor);
+            i++;
+        });
         document.getElementsByClassName('lineSegment')[0].remove();
     }
+
+    function makeDataPoint(price, ul, max, min, i, oldrise, lineColor) {
+        const li = document.createElement('li');
+        let newrise = ((price - min)/(max-min))*400;
+        li.style = `--y: ${newrise}px; --x: ${40*i}px;`;
+        const hyp = Math.sqrt(((newrise-oldrise)**2)+(40**2));
+        let ang = 0;
+        if (newrise > oldrise) {
+            ang = Math.asin(40/hyp) + Math.PI/2;
+        } else {
+            ang = Math.asin((oldrise-newrise)/hyp) + Math.PI;
+        }
+        li.innerHTML = `<div class="dataPoint" value="${price}" style="border: 2px solid ${lineColor}; cursor: pointer;";></div>
+        <div class="lineSegment" style="--hypotenuse: ${hyp}; --angle: ${ang}; background-color: ${lineColor};"></div>`;
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltiptext';
+        tooltip.textContent = `$${price.toFixed(4)}`;
+        ul.append(li);
+        const datapoint = li.querySelector('div');
+        datapoint.addEventListener('mouseover', () => {
+            datapoint.appendChild(tooltip);
+        });
+        datapoint.addEventListener('mouseout', () => {
+            document.querySelector('.tooltiptext').remove();
+        });
+        return newrise;
+    }
+
     function fetchDescription(stockName) {
         fetch(`https://api.coingecko.com/api/v3/coins/${stockName}`)
             .then(resp => resp.json())
             .then(data => displayDecription(data.description.en))
     }
+
     function displayDecription(stockDesc) {
         const sentences = stockDesc.split('\n');
         const p = document.querySelector('#description');
@@ -96,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             p.innerHTML += el + '<br>';
         })
     }
+
     const form = document.querySelector('#searchForm')
     form.addEventListener('mouseover', () => {
         form.style = 'box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12)';
@@ -112,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchDescription(searchedStock);
         form.reset();
     })
+    
     const x = document.querySelector('#xAxis');
     let currHour = date.getHours();
     function hours() {
@@ -140,9 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    hours();
-    const newListBtn = document.querySelector('#newListBtn');
-    newListBtn.addEventListener('click', (e) => {
+    setInterval(hours(), 60*60*1000);
+
+    document.querySelector('#newListBtn').addEventListener('click', (e) => {
         const asideHead = document.querySelector('.asideHead');
         const asideBody = document.querySelector('.asideBody');
         const check = document.querySelector('#newListForm');
@@ -155,67 +168,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 document.querySelector('#newListForm').remove();
             })
-            document.querySelector('#createBtn').addEventListener('click', (e) => {
-                e.preventDefault();
-                const container = document.createElement('div');
-                const div = document.createElement('div');
-                container.id = e.target.parentNode.firstChild.value;
-                container.className = 'container';
-                div.className = 'newList';
-                const h4 = document.createElement('h4');
-                h4.textContent = e.target.parentNode.firstChild.value;
-                const btn1 = document.createElement('button');
-                btn1.className = 'btn1';
-                btn1.textContent = '-';
-                const btn2 = document.createElement('button');
-                btn2.className = 'btn2';
-                btn2.textContent = '\u2227';
-                const option = document.createElement('option');
-                option.value = e.target.parentNode.firstChild.value;
-                option.textContent = e.target.parentNode.firstChild.value;
-                document.querySelector('#myDropdown').appendChild(option);
-                container.appendChild(div);
-                div.appendChild(h4);
-                div.appendChild(btn1);
-                div.appendChild(btn2);
-                asideBody.append(container);
-                document.querySelector('#newListForm').remove();
-                btn2.addEventListener('click', (e) => {
-                    if (btn2.textContent === '\u2227') {
-                        btn2.textContent = '\u2228';
-                        const coins = document.querySelectorAll(`#${e.target.parentNode.parentNode.id} div`)
-                        for (let i = 0; i < coins.length; i++) {
-                            if (coins[i] !== coins[0]) {
-                                coins[i].style = 'visibility: hidden; height: 0px;'
-                            }
-                        }
-                    } else {
-                        btn2.textContent = '\u2227';
-                        const coins = document.querySelectorAll(`#${e.target.parentNode.parentNode.id} div`)
-                        for (let i = 0; i < coins.length; i++) {
-                            if (coins[i] !== coins[0]) {
-                                coins[i].style = 'visibility: visible; height: 52px;'
-                            }
-                        }
-                    }
-                })
-                btn1.addEventListener('click', (e) => {
-                    const textBox = `Are you sure you want to delete the following list? \n \n "${e.target.parentNode.firstChild.textContent}"`;
-                    if (confirm(textBox) === true) {
-                        const options = document.querySelectorAll('option');
-                        for (const option of options) {
-                            if (option.value === e.target.parentNode.querySelector('h4').textContent) {
-                                option.remove();
-                            }
-                        }
-                        e.target.parentNode.parentNode.remove();
-                    }                    
-                })
-            })
+            document.querySelector('#createBtn').addEventListener('click', (e) => createList (e, asideBody))
         }
     })
-    const addBtn = document.querySelector('#addToListBtn');
-    addBtn.addEventListener('click', (e) => {
+
+    function createList (e, asideBody) {
+        e.preventDefault();
+        const container = document.createElement('div');
+        const div = document.createElement('div');
+        container.id = e.target.parentNode.firstChild.value;
+        container.className = 'container';
+        div.className = 'newList';
+        const h4 = document.createElement('h4');
+        h4.textContent = e.target.parentNode.firstChild.value;
+        const delListBtn = document.createElement('button');
+        delListBtn.className = 'btn1';
+        delListBtn.textContent = '-';
+        const collapseListBtn = document.createElement('button');
+        collapseListBtn.className = 'btn2';
+        collapseListBtn.textContent = '\u2227';
+        const option = document.createElement('option');
+        option.value = e.target.parentNode.firstChild.value;
+        option.textContent = e.target.parentNode.firstChild.value;
+        document.querySelector('#myDropdown').appendChild(option);
+        container.appendChild(div);
+        div.appendChild(h4);
+        div.appendChild(delListBtn);
+        div.appendChild(collapseListBtn);
+        asideBody.append(container);
+        document.querySelector('#newListForm').remove();
+        collapseListBtn.addEventListener('click', (e) => {
+            const text = collapseListBtn.textContent === '\u2227' ? '\u2228' : '\u2227';
+            const style = collapseListBtn.textContent === '\u2227' ? 'visibility: hidden; height: 0px;' : 'visibility: visible; height: 52px;';
+            collapseListBtn.textContent = text;
+            const coins = document.querySelectorAll(`#${e.target.parentNode.parentNode.id} div`)
+            for (let i = 0; i < coins.length; i++) {
+                if (coins[i] !== coins[0]) {
+                    coins[i].style = style;
+                }
+            }
+        })
+        delListBtn.addEventListener('click', (e) => {
+            const textBox = `Are you sure you want to delete the following list? \n \n "${e.target.parentNode.firstChild.textContent}"`;
+            if (confirm(textBox) === true) {
+                const options = document.querySelectorAll('option');
+                for (const option of options) {
+                    if (option.value === e.target.parentNode.querySelector('h4').textContent) {
+                        option.remove();
+                    }
+                }
+                e.target.parentNode.parentNode.remove();
+            }                    
+        })
+    }
+
+    document.querySelector('#addToListBtn').addEventListener('click', (e) => {
         const listName = e.target.parentNode.firstChild.nextSibling.nextSibling.nextSibling.value;
         const stockName = e.target.parentNode.firstChild.nextSibling.textContent;
         const listNode = document.querySelector(`#${listName}`);
@@ -223,15 +230,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!check) {        
             const div = document.createElement('div');
             const h4 = document.createElement('h4');
-            const btn1 = document.createElement('button');
+            const delStockBtn = document.createElement('button');
             div.id = stockName;
-            btn1.className = 'btn2';
-            btn1.textContent = '-';
-            btn1.addEventListener('click', (e) => {e.target.parentNode.remove()})
+            delStockBtn.className = 'btn2';
+            delStockBtn.textContent = '-';
+            delStockBtn.addEventListener('click', (e) => {e.target.parentNode.remove()})
             h4.textContent = stockName;
             h4.style = 'cursor: pointer;';
             div.appendChild(h4);
-            div.appendChild(btn1);
+            div.appendChild(delStockBtn);
             listNode.appendChild(div);
             document.querySelector(`#${stockName}`).querySelector('h4').addEventListener('click', (e) => {
                 currentStock = e.target.textContent.toLowerCase();

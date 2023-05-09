@@ -2,6 +2,10 @@
 
 Cryptomaniac is a simple single page application that uses live crypto data from the open source API called Coingecko to allow users to view and track crypto coins. 
 
+## Installation
+
+Fork this repo, copy the SSH link, and type "git clone 'SSH link'" into your terminal in your desired directory.
+
 ## Usage
 
 Cryptomaniac displays hourly stock action for the currently selected coin for the last 24 hours, current price, change/percent chage over the past 24 hours, 24 hour high, 24 hour low, market cap, description of the coin, and 24 hour change in market cap. The page opens with Bitcoin automatically selected so that you immediately see its information on the screen. 
@@ -20,8 +24,6 @@ The page also makes a fetch request to Coingecko every 5 minutes in order to upd
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
-
 ## Roadmap
 
 I plan on eventually adding the capability to change the interval tracking of the graphical price history of the chosen coin.
@@ -30,4 +32,4 @@ In addition, I plan on adding the capability to take a customizable date range t
 
 ## License
 
-Flatiron School
+[MIT](https://choosealicense.com/licenses/mit/)
